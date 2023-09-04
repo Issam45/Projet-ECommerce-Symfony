@@ -1,0 +1,53 @@
+{% extends 'core/base.html.twig' %}
+{# {% form_theme form 'bootstrap_5_layout.html.twig' %} #}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+    <div class="row"> 
+        <div class="card bg-dark text-light pb-3 border-light col-lg-8 mx-auto"> 
+            <h1 class="mt-3 mb-2 text-light">Connectez-vous</h1>
+
+            {# {% for flash in app.flashes('register')%}
+                <div class="alert my-3 {{ flash.color }}">{{ flash.content }}</div> 
+            {% endfor %} #}
+
+            {# Debut du form #}
+
+            {% if erreur %}
+                <div class="text-danger">La combinaison du email et du mot de passe est invalide!</div>
+                <hr>     
+            {% endif %}
+
+            <form action="{{ path('app_connexion') }}" name="connexion_form" method="post">
+                <div class="form-outline mb-4 col-6">
+                    <label class="form-label" for="courriel">Courriel:</label>
+                    <div class="input-group">
+                            <span class="input-group-text" id="inputGroupPrepend">@</span>                       
+
+                            <input class="form-control" type="text" id="username" name="_username" value="{{ dernier_courriel }}">
+                    </div>
+
+                </div>
+
+                {# {{ dump(dernier_courriel) }} #}
+
+                <div class="form-outline mb-4 col-6">
+                    <label class="form-label" for="password">Mot de passe:</label>
+                    <div class="input-group">         
+                        <span class="input-group-text" id="inputGroupPrepend"><i class="fa-solid fa-lock"></i></span>                       
+                        <input class="form-control" type="password" id="password" name="_password">
+                    </div>
+                </div>
+
+                {# If you want to control the URL the user is redirected to on success #}
+                <input type="hidden" name="_target_path" value="{{ path('app_profil') }}"> 
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <button type="submit" class="btn btn-primary">Connexion</button>
+
+                <p class="my-3">Pas encore de compte,  <a href="{{ path('app_inscription') }}">inscrivez-vous</a></p> 
+            </form>
+        </div>
+    </div>   
+{% endblock %}

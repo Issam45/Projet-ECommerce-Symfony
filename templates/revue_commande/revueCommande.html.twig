@@ -1,0 +1,134 @@
+{% extends 'core/base.html.twig' %}
+
+{% block title %}
+  Revue Commande
+{% endblock %}
+
+{% block content %}
+  <section>
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="row">
+          <div class="col-8">
+            <div class="row">
+              <div class="card col-12 bg-dark border mb-3">
+                <div class="card-body py-4 px-4 px-md-5">
+                  <div class="text-light">
+                    <h3>Adresse de livraison</h3>
+                    {# {{ dump(app.user) }} #}
+                    <table class="table table-borderless text-light">
+                      <th>
+                        <tr>
+                          <td>
+                            <b>{{ app.user.prenom }} {{ app.user.nom }}</b>
+                          </td>
+                        </tr>
+                      </th>
+                      <tbody>
+                        <tr>
+                          <td>{{ app.user.adresse }}</td>
+                        </tr>
+                        <tr>
+                          <td>{{ app.user.ville }}, {{ app.user.province }}, {{ app.user.codePostal }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="card col-12 bg-dark border">
+                <div class="card-body py-1 px-4 px-md-5"></div>
+                <p class="h1 text-left mt-1 mb-4 pb-3 text-white">
+                  <u>Contenu de votre commande</u>
+                </p>
+                <hr class="my-4" />
+                {% if (app.session.get('panier').items|length) > 0 %}
+                  <table class="table table-hover table-stripped table-list">
+                    <thead class="table-dark">
+                      <tr>
+                        <th scope="col">Produit</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Prix</th>
+                        <th scope="col">Quantité</th>
+                        <th scope="col">Total</th>
+                      </tr>
+                    </thead>
+                    {% for achat in app.session.get('panier').items %}
+                      <tbody>
+                        <tr>
+                          <td class="table-image">
+                            <img src="{{ asset_if(achat.produit.imagePath, 'https://via.placeholder.com/250x200') }}" class="mx-auto rounded d-block img-fluid img-thumbnail" alt="Produit" />
+                          </td>
+                          <td class="table-nom">
+                            <h6 class="text-white fw-bold mx-2">{{ achat.produit.nom }}</h6>
+                          </td>
+                          <td class="table-prix">
+                            <h6 class="text-white fw-bold mx-2">{{ achat.produit.prix|number_format(2, '.', ' ') }}$</h6>
+                          </td>
+                          <td class="table-quantite">
+                            <h6 class="text-white text-center">{{ achat.quantite }}</h6>
+                          </td>
+                          <td class="table-prixTotal">
+                            <h6 class="text-white fw-bold mx-2">{{ (achat.produit.prix * achat.quantite)|number_format(2, '.', ' ') }}$</h6>
+                          </td>
+                        </tr>
+                      </tbody>
+                    {% endfor %}
+                  </table>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="card sommaire bg-dark text-white text-bold col-3 ms-3 pt-3 border">
+            <h2>Sommaire</h2>
+            <hr />
+            <div class="justify-content-between d-flex">
+              <h5>Sous-Total</h5>
+              <h5 class="mx-4"></h5>
+              <h5>{{ app.session.get('panier').getSousTotalPanier()|number_format(2, '.', ' ') }}$</h5>
+            </div>
+            <hr />
+            <div class="justify-content-between d-flex">
+              <h5>TPS</h5>
+              <h5 class="mx-4"></h5>
+              <h5>{{ app.session.get('panier').getTPS()|number_format(2, '.', ' ') }}$</h5>
+            </div>
+            <hr />
+            <div class="justify-content-between d-flex">
+              <h5>TVQ</h5>
+              <h5 class="mx-4"></h5>
+              <h5>{{ app.session.get('panier').getTVQ()|number_format(2, '.', ' ') }}$</h5>
+            </div>
+            <hr />
+            <div class="justify-content-between d-flex">
+              <h5>Frais de livraison</h5>
+              <h5 class="mx-4"></h5>
+              <h5>{{ app.session.get('panier').getFraisLivraisons()|number_format(2, '.', ' ') }}$</h5>
+            </div>
+            <hr />
+            <a href="{{ path('stripe_checkout') }}">
+              <div class="row px-2">
+                <Button class="btn btn-success mb-2">
+                  <div class="row">
+                    <div class="border-end col-3">
+                      <i class="fa-brands fa-cc-stripe"></i>
+                    </div>
+                    <div class="col-7">Payer {{ app.session.get('panier').getTotalPanier()|number_format(2, '.', ' ') }}$</div>
+                  </div>
+                </Button>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block javascripts %}
+  <script src="{{ asset('scripts/modal.produit.js') }}"></script>
+{% endblock %}

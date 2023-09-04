@@ -1,0 +1,33 @@
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('styles/modal.css') }}">
+{% endblock %}
+
+<div class="modal-header">
+	<h5 class="modal-title md-titre">{{ produit.nom }}</h5>
+	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+	<div class="row">
+
+		<div class="col-6">
+			<img src="{{ asset_if(produit.imagePath,'https://via.placeholder.com/250x200') }}" class="mx-auto card-header-pills d-block card-img-top img-produit img-thumbnail" alt="Produit">
+		</div>
+
+		<div class="col-6 md-contenu">
+				<p class="fs-3">Catégorie: {{ produit.produitCategorie.categorie }}</p>
+				<hr>
+				<p id="prix">{{ produit.prix | number_format(2, '.', ' ') }}$</p>
+				<br>
+				<p>{{ produit.description | raw }}</p>
+				<br>
+				<b><p> Quantité en inventaire: {{ produit.quantiteEnStock }}</p></b> 
+		</div>		
+	</div>
+</div>
+<div class="modal-footer md-footer">    
+    <button class="produit-ajout btn" title="Ajouter au panier">
+						<i class="fas fa-shopping-basket" content="\f291"></i>
+						<span>Ajouter au panier</span>
+	</button>
+	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+</div>

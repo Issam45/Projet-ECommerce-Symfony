@@ -1,0 +1,101 @@
+.logo {
+    float: left;
+    margin-right: 0;
+
+}
+
+.logo img {
+    width: 100px;
+    margin-right: 2px;
+}
+
+.image-panier {
+    height: auto;
+}
+
+.iconeBag i {
+    color: white;
+}
+
+.iconeBag:hover i {
+    color: blue;
+}
+
+.logoNav {
+    z-index: 1;
+    width: 15vh;
+}
+
+.txtBienvenue {
+    width: 25vh;
+}
+
+.txtConnexion:hover {
+    color: cornflowerblue;
+}
+
+#accueilNav:hover {
+    margin-left: 3vh;
+    color: #FAAFBA;
+}
+
+#produitsNav:hover {
+    margin-left: 3vh;
+    color: #FAAFBA;
+}
+
+#contactNav:hover {
+    margin-left: 3vh;
+    color: #FAAFBA;
+}
+
+#panierNav:hover {
+    margin-left: 3vh;
+    color: #FAAFBA;
+}
+
+#commandesNav:hover {
+    margin-left: 3vh;
+    color: #FAAFBA;
+}
+
+#categNav:hover {
+    color: #FAAFBA;
+}
+
+#catEstee:hover {
+    color: #FAAFBA;
+}
+
+#catTooFaced:hover {
+    color: #FAAFBA;
+}
+
+#catClinique:hover {
+    color: #FAAFBA;
+}
+
+#catTomFord:hover {
+    color: #FAAFBA;
+}
+
+#voirPlus {
+    color: #000;
+    font-size: 0.85em;
+    font-weight: bold;
+    text-decoration: none;
+    /* margin-top: 7%; */
+}
+
+#voirPlus:hover {
+    color: red;
+    font-size: 0.85em;
+    text-decoration: none;
+}
+
+#panierVide {
+    color: #000;
+    font-size: 0.85em;
+    font-weight: bold;
+    text-decoration: none;
+}

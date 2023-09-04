@@ -1,0 +1,205 @@
+{% extends 'core/base.html.twig' %}
+
+{% block title %}
+  CosmeticsIA
+{% endblock %}
+
+{% block content %}
+  <div class="card bg-dark pgbFix">
+    {% for flash in app.flashes('commande') %}
+      <div class="text-center alert {{ flash.couleur }}">{{ flash.contenu|raw }}</div>
+    {% endfor %}
+    <div class="card-body text-white">
+      <div class="d-flex justify-content-between">
+        <h3>Commande #{{ commande.idCommande }}</h3>
+        {# <h3>{{ commande.etat }}</h3> #}
+        <form class="w-25" method="post" action="{{ path('app_admin_detailsCommande', { idCommande: commande.idCommande }) }}" id="etatForm">
+          <select name="selectedEtat" id="select" class="form-select bg-dark text-white selectFix">
+            {% for key, etat in listeEtat %}
+              {% if commande.etat == etat %}
+                <option value="{{ key + 1 }}" selected>{{ etat }}</option>
+              {% else %}
+                <option value="{{ key + 1 }}">{{ etat }}</option>
+              {% endif %}
+              {# <option value="2">Envoyée</option>
+            <option value="3">En transit</option>
+            <option value="4">Livrée</option> #}
+            {% endfor %}
+          </select>
+        </form>
+      </div>
+      <hr />
+      {# Progression de la livraison #}
+      <div class="progress-container d-flex justify-content-around align-self-center">
+        <div class="progress" id="progress"></div>
+        <div class="circle inactive">
+          <i id="icons"></i>
+        </div>
+        <div class="circle inactive">
+          <i id="icons"></i>
+        </div>
+        <div class="circle inactive">
+          <i id="icons"></i>
+        </div>
+        <div class="circle inactive">
+          <i id="icons"></i>
+        </div>
+      </div>
+      {# Fin progression de la livraison #}
+
+      <div class="d-flex justify-content-around">
+        <h5 id="notSet" class="text-primary">En préparation</h5>
+        <h5 id="notSet">Envoyée</h5>
+        <h5 id="notSet">En transit</h5>
+        <h5 id="notSet">Livrée</h5>
+      </div>
+
+      {# Info sur la commande adresse livraison, facture, etc #}
+      <section>
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="row mb-4">
+              <div class="card sommaire bg-dark text-white text-bold col-3 pb-4 ms-3 pt-3 border me-3 detailsRow1">
+                <div class="justify-content-between d-flex">
+                  <h5>Admin # Commande</h5>
+                  <h5 class="mx-4"></h5>
+                  <h5>{{ commande.idCommande }}</h5>
+                </div>
+                <hr />
+                <div class="justify-content-between d-flex">
+                  <h5>Nombre d'articles</h5>
+                  <h5 class="mx-4"></h5>
+                  <h5>{{ commande.getNbItems }}</h5>
+                </div>
+                <hr />
+                <div class="justify-content-between d-flex">
+                  <h5>Date De Commande</h5>
+                  <h5 class="mx-4"></h5>
+                  <h5>{{ commande.dateCommande|date('Y/m/d H:i:s', 'America/Toronto') }}</h5>
+                </div>
+                <hr />
+                {% if commande.etat == listeEtat[3] %}
+                  <div class="mb-3 justify-content-between d-flex">
+                    <h5>Date De Livraison</h5>
+                    <h5 class="mx-4"></h5>
+                    <h5>{{ commande.dateLivraison|date('Y/m/d H:i:s', 'America/Toronto') }}</h5>
+                  </div>
+                {% else %}
+                  <div class="mb-3 justify-content-between d-flex">
+                    <h5>Date De Livraison</h5>
+                    <h5 class="mx-4"></h5>
+                    <h5>À venir</h5>
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="col-3">
+                <div class="row">
+                  <div class="card bg-dark border mb-3 detailsRow1">
+                    <div class="card-body">
+                      <div class="text-light">
+                        <h3>Adresse de livraison</h3>
+                        <hr />
+                        {# {{ dump(app.user) }} #}
+                        <table class="table table-borderless text-light">
+                          <th>
+                            <tr>
+                              <td>
+                                <b>{{ commande.client.prenom }} {{ commande.client.nom }}</b>
+                              </td>
+                            </tr>
+                          </th>
+                          <tbody>
+                            <tr>
+                              <td>{{ commande.client.adresse }}</td>
+                            </tr>
+                            <tr>
+                              <td>{{ commande.client.ville }}, {{ commande.client.province }}, {{ commande.client.codePostal }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card sommaire bg-dark text-white text-bold col-3 pb-4 ms-3 pt-3 border detailsRow1">
+                <div class="justify-content-between d-flex">
+                  <h5>Sous-Total</h5>
+                  <h5 class="mx-4"></h5>
+                  <h5>{{ commande.getSousTotalCommande()|number_format(2, '.', ' ') }}$</h5>
+                </div>
+                <hr />
+                <div class="justify-content-between d-flex">
+                  <h5>Rabais</h5>
+                  <h5 class="mx-4"></h5>
+                  <h5>0$</h5>
+                </div>
+                <hr />
+                <div class="justify-content-between d-flex">
+                  <h5>Frais de livraison</h5>
+                  <h5 class="mx-4"></h5>
+                  <h5>{{ commande.getFraisLivraison()|number_format(2, '.', ' ') }}$</h5>
+                </div>
+                <hr />
+
+                <div class="mb-3 justify-content-between d-flex">
+                  <h5>Total</h5>
+                  <h5 class="mx-4"></h5>
+                  <h5>{{ commande.getTotalCommande()|number_format(2, '.', ' ') }}$</h5>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="card col-12 bg-dark border">
+                <div class="card-body py-1 px-4 px-md-5"></div>
+                <p class="h1 text-left mt-1 mb-4 pb-3 text-white">
+                  <u>Contenu de votre commande</u>
+                </p>
+                <hr class="my-4" />
+                <table class="table table-hover table-stripped table-list">
+                  <thead class="table-dark">
+                    <tr>
+                      <th scope="col">Produit</th>
+                      <th scope="col">Nom</th>
+                      <th scope="col">Prix</th>
+                      <th scope="col">Quantité</th>
+                      <th scope="col">Total</th>
+                    </tr>
+                  </thead>
+                  {% for achat in commande.achats %}
+                    <tbody>
+                      <tr>
+                        <td class="table-image">
+                          <img src="{{ asset_if(achat.produit.imagePath, 'https://via.placeholder.com/250x200') }}" class="mx-auto rounded d-block img-fluid img-thumbnail" alt="Produit" />
+                        </td>
+                        <td class="table-nom">
+                          <h6 class="text-white fw-bold mx-2">{{ achat.produit.nom }}</h6>
+                        </td>
+                        <td class="table-prix">
+                          <h6 class="text-white fw-bold mx-2">{{ achat.produit.prix|number_format(2, '.', ' ') }}$</h6>
+                        </td>
+                        <td class="table-quantite">
+                          <h6 class="text-white text-center">{{ achat.quantite }}</h6>
+                        </td>
+                        <td class="table-prixTotal">
+                          <h6 class="text-white fw-bold mx-2">{{ achat.calculerPrix|number_format(2, '.', ' ') }}$</h6>
+                        </td>
+                      </tr>
+                    </tbody>
+                  {% endfor %}
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  <script src="{{ asset('scripts/progress.js') }}"></script>
+{% endblock %}

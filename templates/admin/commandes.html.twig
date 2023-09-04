@@ -1,0 +1,55 @@
+{% extends 'core/base.html.twig' %}
+
+{% block title %}
+  CosmeticsIA
+{% endblock %}
+
+{% block content %}
+  {# A faire: tableau contenant toutes les commandes #}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card bg-dark">
+          <h2 class="mt-3 ms-2 text-white">Commandes</h2>
+          <hr class="mb-2 mx-4 text-white" />
+          <div class="card-body text-white">
+            <table class="table table-bordered table-hover table-dark text-center">
+              <thead>
+                <tr>
+                  <th># Commande</th>
+                  <th>Date</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Client</th>
+                  <th>Détails</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for commande in commandes|reverse %}
+                  <tr>
+                    <td>{{ commande.idCommande }}</td>
+                    <td>{{ commande.dateCommande|date('Y/m/d H:i:s', 'America/Toronto') }}</td>
+                    {# Pour l'instant #}
+                    <td>{{ commande.getTotalCommande|number_format(2, '.', ' ') }}$</td>
+                    <td>{{ commande.etat }}</td>
+                    <td>{{ commande.client.prenom }} {{ commande.client.nom }}</td>
+                    <td>
+                      <a href="{{ path('app_admin_detailsCommande', { idCommande: commande.idCommande }) }}"><i class="fas fa-eye"></i></a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                {% if (commandes|length) == 0 %}
+                  <tr>
+                    <h2>Aucune commande n'est enregistré sur votre compte.</h2>
+                  </tr>
+                {% endif %}
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

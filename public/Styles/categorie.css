@@ -1,0 +1,22 @@
+.categorie-liens {
+    text-decoration: none;
+    transition: transform .2s;
+    color: white;
+
+    /* color: rgb(14, 13, 13); */
+}
+
+.decalageToutes {
+    margin-right: 3%;
+}
+
+.decalageCategories {
+    margin-left: 10%;
+    margin-right: 3%;
+}
+
+.categorie-liens:hover {
+    box-shadow: 20px;
+    color: #FAAFBA;
+    transform: scale(1.05);
+}

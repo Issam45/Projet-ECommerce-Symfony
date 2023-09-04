@@ -1,0 +1,15 @@
+.produit-modal {
+    text-decoration: none;
+    color: black;
+}
+
+.produit-modal:hover {
+    box-shadow: 20px;
+    color: #e67782;
+}
+
+.sectionProduits {}
+
+.sectionProduits p {
+    color: white;
+}

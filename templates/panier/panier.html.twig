@@ -1,0 +1,148 @@
+{% extends 'core/base.html.twig' %}
+
+{% block title %}
+  Contact
+{% endblock %}
+
+{% block content %}
+  <section>
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="row">
+          <div class="card col-8 bg-dark border">
+            <div class="card-body py-4 px-4 px-md-5">
+              <p class="h1 text-center mt-3 mb-4 pb-3 text-white">
+                <i class="fas fa-shopping-basket me-1"></i>
+                <u>Panier - {{ app.session.get('panier').items|length }}</u>
+              </p>
+
+              {% for flash in app.flashes('panier') %}
+                <div class="text-center alert {{ flash.couleur }}">{{ flash.contenu }}</div>
+              {% endfor %}
+
+              {% for flash in app.flashes('commande') %}
+                <div class="text-center alert {{ flash.couleur }}">{{ flash.contenu }}</div>
+              {% endfor %}
+
+              <hr class="my-4" />
+
+              {% if (app.session.get('panier').items|length) > 0 %}
+                <form action="{{ path('panier_update') }}" method="POST">
+                  <table class="table table-hover table-stripped table-list">
+                    <thead class="table-dark">
+                      <tr>
+                        <th scope="col">Produit</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Prix</th>
+                        <th scope="col">Quantité</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    {% for key, achat in panier.items %}
+                      <tbody>
+                        <tr>
+                          <td class="table-image">
+                            <img src="{{ asset_if(achat.produit.imagePath, 'https://via.placeholder.com/250x200') }}" class="mx-auto rounded d-block img-fluid img-thumbnail" alt="Produit" />
+                          </td>
+
+                          <td class="table-nom">
+                            <h6 class="text-white fw-bold mx-2" type="text" name="{{ 'txtAchat[' ~ key ~ ']' }}">{{ achat.produit.nom }}</h6>
+                          </td>
+
+                          <td class="table-prix">
+                            <h6 class="text-white fw-bold mx-2" type="number" name="{{ 'txtPrix[' ~ key ~ ']' }}">{{ achat.produit.prix|number_format(2, '.', ' ') }}$</h6>
+                          </td>
+
+                          <td class="table-quantite">
+                            <input class="quantite-produit" type="number" value="{{ achat.quantite }}" min="0" max="99" name="{{ 'txtQuantite[' ~ key ~ ']' }}" />
+                          </td>
+
+                          <td class="table-prixTotal">
+                            <h6 type="text" class="text-white fw-bold mx-2" name="{{ 'txtPrixTotal[' ~ key ~ ']' }}">{{ achat.calculerPrix()|number_format(2, '.', ' ') }}$</h6>
+                          </td>
+
+                          <td class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent table-action">
+                            <a href="{{ path('produit_modal', { idProduit: achat.produit.idProduit }) }}" class="text-success produit-modal me-2" alt="Voir détails"><i class="fa-solid fa-eye"></i></a>
+                            <a href="{{ path('achat_supprimer', { index: key }) }}" class="text-danger" alt="Supprimer produit"><i class="fa-solid fa-dumpster"></i></a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    {% endfor %}
+                  </table>
+
+                  <div class="d-flex flex-row justify-content-md-center my-2">
+                    <button name="action" value="rafraichir" type="submit" class="btn btn-success col-4 mx-3"><i class="fas fa-arrows-rotate"></i> Mettre à jour</button>
+                    <button name="action" value="vider" type="submit" class="btn btn-danger col-4 mx-3 text-center"><i class="fas fa-trash"></i> Vider le panier</button>
+                    <a href="{{ path('app_catalogue') }}" class="btn btn-info col-4 mx-3 text-center"><i class="fas fa-regular fa-bag-shopping"></i> Continuer vos achats</a>
+                  </div>
+
+                  <div class="modal fade" tabindex="-1" id="produit-modal">
+                    <div class="modal-dialog modal-lg">
+                      <div id="produit-modal-contenu" class="modal-content md-bg"></div>
+                    </div>
+                  </div>
+                </form>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="card sommaire bg-dark text-white text-bold col-3 ms-3 pt-3 border">
+            <h2>Sommaire</h2>
+
+            <hr />
+
+            <div class="justify-content-between d-flex">
+              <h5>Sous-Total</h5>
+              <h5 class="mx-4"></h5>
+              <h5>{{ panier.getSousTotalPanier()|number_format(2, '.', ' ') }}$</h5>
+            </div>
+
+            <hr />
+
+            <div class="justify-content-between d-flex">
+              <h5>TPS</h5>
+              <h5 class="mx-4"></h5>
+              <h5>{{ panier.getTPS()|number_format(2, '.', ' ') }}$</h5>
+            </div>
+
+            <hr />
+
+            <div class="justify-content-between d-flex">
+              <h5>TVQ</h5>
+              <h5 class="mx-4"></h5>
+              <h5>{{ panier.getTVQ()|number_format(2, '.', ' ') }}$</h5>
+            </div>
+
+            <hr />
+
+            <div class="justify-content-between d-flex">
+              <h5>Frais de livraison</h5>
+              <h5 class="mx-4"></h5>
+              <h5>{{ panier.getFraisLivraisons()|number_format(2, '.', ' ') }}$</h5>
+            </div>
+
+            <hr />
+
+            <a href="{{ path('app_revue_commande') }}" class="btnAchat">
+              <div class="row px-2">
+                <Button class="btn btn-success mb-2">
+                  <div class="row">
+                    <div class="border-end col-3">
+                      <i class="fa-brands fa-cc-stripe"></i>
+                    </div>
+                    <div class="col-7">Caisse {{ panier.getTotalPanier()|number_format(2, '.', ' ') }}$</div>
+                  </div>
+                </Button>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block javascripts %}
+  <script src="{{ asset('scripts/modal.produit.js') }}"></script>
+{% endblock %}

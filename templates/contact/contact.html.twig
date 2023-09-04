@@ -1,0 +1,98 @@
+{% extends 'core/base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+ {% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('styles/page.css') }}">
+ {% endblock %}
+
+		<h1 class="text-danger bg-dark text-center border border-4 rounded-end">Ce site n'est pas une plateforme officielle, mais a été développé uniquement à des fins pédagogiques.</h1>
+ 		<div class="row mt-5">
+			<div class="col-7 me-3 card google-map bg-dark items-center">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2782.60515708963!2d-74.00256504892909!3d45.77910272029419!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccf2ca45e889b7f%3A0x23b59b4c40094d27!2zQ8OpZ2VwIGRlIFNhaW50LUrDqXLDtG1l!5e0!3m2!1sfr!2sca!4v1676520056916!5m2!1sfr!2sca" width="625" height="450" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+			</div>
+			<div class="col-4 card sources bg-dark">
+				<b> Sources: </b>
+				<ol>		
+					<li><a href="https://www.sephora.com/ca/en/?country_switch=ca&lang=en">https://www.sephora.com/ca/en/?country_switch=ca&lang=en</a></li>
+					<li><a href="https://analogdigital.tv/work/estee-lauder/">https://analogdigital.tv/work/estee-lauder/</a></li>
+					<li><a href="https://regex101.com/">https://regex101.com/</a></li>
+				</ol>
+
+				<hr>
+				<b><h4>Téléphone:</h4></b>
+				<ul>
+					<li>514-000-0000</li>
+				</ul>
+
+				<b><h4 class="mt-2">Adresse:</h4></b>
+				<ul>
+					<li>455 rue fournier, Saint-Jérome,</br> QC J7Y 4V2</li>
+				</ul>
+				<p></p>
+			</div>
+		</div>
+
+  {# Section FEATURES interessante #}
+	<div class="features ms-5">
+		<div class="container">
+			<h3 class="m_3 text-light">Options</h3>
+			<div class="close_but"><i class="close1"> </i></div>
+			  <div class="row">
+				<div class="col-md-3 top_box">
+				  <div class="view view-ninth"><a href="#">
+                    <img src="Images/Estee/ELMultiEffectNight.jpg" class="img-fluid" alt=""/>
+                    <div class="mask mask-1"> </div>
+                    <div class="mask mask-2"> </div>
+                      <div class="content text-light">
+                        <h2>Multi Effect Night</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing.</p>
+                      </div>
+                   </a> </div
+                  </div>
+                  <h4 class="m_4 text-light"><a href="#">Multi Effect Night</a></h4>
+                  <p class="m_5 text-light"></p>
+                </div>
+                <div class="col-md-3 top_box">
+					<div class="view view-ninth"><a href="#">
+                    <img src="Images/TooFaced/lipInjectionMax.jpg" alt=""/>
+                    <div class="mask mask-1"> </div>
+                    <div class="mask mask-2"> </div>
+                      <div class="content">
+                        <h2>Lip Injection</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing.</p>
+                      </div>
+                    </a> </div>
+                   <h4 class="m_4 text-light"><a href="#">Lip Injection</a></h4>
+                   <p class="m_5 text-light"></p>
+				</div>
+				<div class="col-md-3 top_box">
+					<div class="view view-ninth"><a href="#">
+                    <img src="Images/Clinique/cliniqueAntiAge.jpg" alt=""/>
+                    <div class="mask mask-1"> </div>
+                    <div class="mask mask-2"> </div>
+                      <div class="content">
+                        <h2>Clinique Anti-Âge</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing.</p>
+                      </div>
+                    </a> </div>
+                   <h4 class="m_4 text-light"><a href="#">Clinique Anti-Âge</a></h4>
+                   <p class="m_5 text-light"></p>
+				</div>
+				<div class="col-md-3 top_box1">
+					<div class="view view-ninth"><a href="#">
+                    <img src="Images/Estee/ELFuturist.jpg" alt=""/>
+                    <div class="mask mask-1"> </div>
+                    <div class="mask mask-2"> </div>
+                      <div class="content">
+                        <h2>Futurist</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing.</p>
+                      </div>
+                     </a> </div>
+                   <h4 class="m_4 text-light"><a href="#">Futurist</a></h4>
+                   <p class="m_5 text-light"></p>
+				</div>
+			</div>
+		 </div>
+{% endblock %}

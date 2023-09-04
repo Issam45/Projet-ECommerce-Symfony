@@ -1,0 +1,12 @@
+.lstFormCat {
+    text-align: center;
+}
+
+.lstFormCat li {
+    font-weight: bold;
+}
+
+/* .selectFix {
+    position: relative;
+    z-index: 1;
+} */

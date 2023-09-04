@@ -1,0 +1,54 @@
+{% extends 'core/base.html.twig' %}
+{% form_theme formProduit 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}
+  CosmeticsIA
+{% endblock %}
+
+{% block content %}
+  <div class="card bg-dark">
+    <div class="card-body text-white">
+      {% if titre == 'Nouveau' %}
+        <h3>Ajout d'un produit</h3>
+      {% else %}
+        <h3>Modification d'un produit</h3>
+      {% endif %}
+      <hr />
+      
+      {% for flash in app.flashes('produit') %}
+        <div class="text-center offset-3 w-50 alert {{ flash.couleur }}">{{ flash.contenu }}</div>
+      {% endfor %}
+
+      {{ form_start(formProduit, {'attr': {'class': 'needs-validation-register', 'novalidate':'novalidate' }}) }}
+
+      <div class="row">
+        <div class="col-12">{{ form_row(formProduit.nom) }}</div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">{{ form_row(formProduit.produitCategorie) }}</div>
+        <div class="col-6">{{ form_row(formProduit.prix) }}</div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">{{ form_row(formProduit.quantiteEnStock) }}</div>
+        <div class="col-6">{{ form_row(formProduit.imagePath) }}</div>
+      </div>
+
+      <div class="row">
+        <div class="col-12" style="">{{ form_row(formProduit.description) }}</div>
+      </div>
+
+      <div class="row offset-5 mt-3">
+        <div class="col-12" style="">{{ form_row(formProduit.save) }}</div>
+      </div>
+
+      {{ form_end(formProduit) }}
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  <script defer src="https://cdn.jsdelivr.net/npm/jquery-mask-plugin@1.14.16/dist/jquery.mask.min.js"></script>
+  <script defer src="{{ asset('scripts/inscription.js') }}"></script>
+{% endblock %}

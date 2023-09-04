@@ -1,0 +1,56 @@
+.sommaire {
+    height: 80%;
+    width: auto;
+}
+
+.table-image {
+    width: 7%;
+    height: 7%;
+}
+
+.table-nom {
+    width: 25%;
+    white-space: nowrap;
+    text-transform: capitalize;
+}
+
+.table-prix {
+    width: 15%;
+    margin-right: 10rem;
+}
+
+.table-prixTotal {
+    width: 15%;
+}
+
+.table-quantite {
+    width: 7%;
+}
+
+.table-action {
+    width: auto;
+}
+
+input.quantite-produit {
+    width: 75%;
+    color: white;
+    font-size: 15px;
+    margin: 0px 2px;
+    padding: 3px 0px;
+    border-radius: 8px;
+    text-align: center;
+    background: var(--chalk);
+    border: 2px solid var(--chalk);
+}
+
+.iconeAjout {
+    color: #b3b3b3;
+}
+
+.iconeAjout:hover {
+    color: #FAAFBA;
+}
+
+.btnAchat {
+    text-decoration: none;
+}

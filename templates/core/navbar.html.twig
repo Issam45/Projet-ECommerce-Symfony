@@ -1,0 +1,224 @@
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('styles/navbar.css') }}" />
+{% endblock %}
+<nav class="navbar navbar-dark bg-dark fixed-top bg-opacity-50">
+  <div class="container-fluid">
+    {# Section Logo #}
+    <div class="logo">
+      <div class="row">
+        <a href="{{ path('app_catalogue') }}" class="logoNav"><img class="img-fluid" src="/Images/Nav/logoCosmeticsIA.jpg" alt="" /></a>
+        {% if app.user != null %}
+          <h5 class="mb-4 pt-4 txtBienvenue">Bienvenue {{ app.user.prenom }} !</h5>
+        {% endif %}
+      </div>
+    </div>
+
+    {# Section cart & offCanva bouton #}
+    <div class="row">
+      <div class="col-4">
+        <ul class="icon1 sub-icon1 profile_img text-dark">
+          <li>
+            <a href="{{ path('app_panier') }}" class="iconeBag"><i class="fas fa-regular fa-bag-shopping"></i></a>
+            <ul class="sub-icon1 list">
+              <div class="product_control_buttons">
+                <a href="#"><img src="/Images/Nav/edit.png" alt="" /></a>
+                <a href="#"><img src="/Images/Nav/close_edit.png" alt="" /></a>
+              </div>
+
+              <div class="clear"></div>
+              {% if app.session.get('panier') != null %}
+                {% for key, achat in app.session.get('panier').items|slice(0, 2) %}
+                  {% if (app.session.get('panier').items|length) == 1 %}
+                    <li class="list_img image-panier">
+                      <img class="img-fluid" src="{{ asset_if(achat.produit.imagePath, 'https://via.placeholder.com/250x200') }}" alt="" />
+                    </li>
+                    <li class="list_desc">
+                      <h4 class="panierNom"><a href="#">{{ achat.produit.nom }}</a></h4><span class="actual">
+                        {{ achat.quantite }} x
+                        {{ achat.produit.prix }}$
+                      </span>
+                    </li>
+                  {% endif %}
+
+                  {% if (app.session.get('panier').items|length) == 2 %}
+                    <li class="list_img image-panier">
+                      <img class="img-fluid" src="{{ asset_if(achat.produit.imagePath, 'https://via.placeholder.com/250x200') }}" alt="" />
+                    </li>
+                    <li class="list_desc">
+                      <h4 class="panierNom"><a href="#">{{ achat.produit.nom }}</a></h4><span class="actual">
+                        {{ achat.quantite }} x
+                        {{ achat.produit.prix }}$
+                      </span>
+                    </li>
+                    {% if key != 1 %}
+                      <div class="clear"></div>
+                      <hr />
+                    {% endif %}
+                  {% endif %}
+
+                  {% if (app.session.get('panier').items|length) >= 3 %}
+                    <li class="list_img image-panier">
+                      <img class="img-fluid" src="{{ asset_if(achat.produit.imagePath, 'https://via.placeholder.com/250x200') }}" alt="" />
+                    </li>
+                    <li class="list_desc">
+                      <h4 class="panierNom"><a href="#">{{ achat.produit.nom }}</a></h4><span class="actual">
+                        {{ achat.quantite }} x
+                        {{ achat.produit.prix }}$
+                      </span>
+                    </li>
+                    {% if key != 1 %}
+                      <div class="clear"></div>
+                      <hr />
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+
+              <div class="login_buttons">
+                <div class="clear"></div>
+                {% if app.session.get('panier') != null %}
+                  {% if (app.session.get('panier').items|length) >= 3 %}
+                    <a class="mt-3" id="voirPlus" href="{{ path('app_panier') }}"><h5>Voir plus...</h5></a>
+                  {% endif %}
+                  {% if (app.session.get('panier').items|length) == 0 %}
+                    <p id="panierVide">Aucun item dans le panier</p>
+                  {% endif %}
+                {% else %}
+                  <p id="panierVide">Aucun item dans le panier</p>
+                {% endif %}
+                <hr />
+                <div class="check_button">
+                  <a href="{{ path('app_panier') }}">Commander</a>
+                </div>
+                {% if app.user == null %}
+                  <div class="login_button">
+                    <a href="{{ path('app_connexion') }}">Connexion</a>
+                  </div>
+                {% endif %}
+
+                <div class="clear"></div>
+              </div>
+              <div class="clear"></div>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-4">
+        {% if app.user == null %}
+          <a href="{{ path('app_connexion') }}" class="" title="Se connecter"><i class="fa fa-thin fa-user"></i></a>
+        {% else %}
+          <a href="{{ path('app_profil') }}" class="" title="Voir profil"><i class="fa fa-thin fa-user"></i></a>
+        {% endif %}
+      </div>
+
+      <div class="col-4">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"><span class="navbar-toggler-icon"></span></button>
+      </div>
+    </div>
+
+    {# Début section offCanvas #}
+    <div class="offcanvas offcanvas-end text-bg-dark bg-opacity-100" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+      <div class="offcanvas-header">
+        <h3 class="offcanvas-title" id="offcanvasDarkNavbarLabel">CosmeticsIA</h3>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <hr />
+      <div class="offcanvas-body">
+        <div class="justify-content-"></div>
+        {% if app.user != null %}
+          <div class="row mb-2">
+            <div class="col-3">
+              <a class="nav-link" href="{{ path('app_profil') }}" title="Mon profil"><img src="https://ui-avatars.com/api/?name={{ app.user.prenom }}+{{ app.user.nom }}&rounded=true&background=696969" alt="Voir votre profil" /></a>
+            </div>
+
+            <div class="col-9 pt-5 pe-2">
+              <a class="txtConnexion" href="{{ path('app_deconnexion') }}">Se déconnecter</a>
+            </div>
+          </div>
+        {% else %}
+          <div class="row mb-2">
+            <div class="col-3">
+              <a class="nav-link" href="{{ path('app_profil') }}" title="Connecetez-vous"><img class="rounded-circle" src="/Images/Nav/utilisateur.png" alt="Voir votre profil" /></a>
+            </div>
+
+            <div class="col-9 pt-5 pe-2">
+              <a class="txtConnexion" href="{{ path('app_connexion') }}">Se connecter</a>
+            </div>
+          </div>
+        {% endif %}
+
+        <hr />
+
+        {# Barre de recherche #}
+        <div class="search-box ms-3">
+          {% if app.request.pathinfo == '/' %}
+            <form class="d-flex" method="POST" action="{{ app.request.uri }}">
+              <button class="btn-search"><i class="fas fa-search"></i></button>
+              <input class="input-search form-control me-2 text-light" placeholder="Rechercher un terme..." type="text" name="case_recherche" id="search" aria-label="Search" />
+            </form>
+          {% else %}
+            <form class="d-flex" method="POST" action="{{ path('app_catalogue') }}">
+              <button class="btn-search"><i class="fas fa-search"></i></button>
+              <input class="input-search form-control me-2 text-light" placeholder="Rechercher un terme..." type="text" name="case_recherche" id="search" aria-label="Search" />
+            </form>
+          {% endif %}
+        </div>
+
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 mt-2">
+          <li class="nav-item">
+            <a id="accueilNav" class="nav-link active" aria-current="page" href="{{ path('app_catalogue') }}"><h4>Accueil</h4></a>
+          </li>
+          <li class="nav-item">
+            <a id="produitsNav" class="nav-link" href="{{ path('app_catalogue') }}"><h4>Produits</h4></a>
+          </li>
+          <li class="nav-item">
+            <a id="contactNav" class="nav-link" href="{{ path('app_contact') }}"><h4>Contact</h4></a>
+          </li>
+          <li class="nav-item">
+            <a id="panierNav" class="nav-link" href="{{ path('app_panier') }}"><h4>Panier</h4></a>
+          </li>
+          {% if app.user != null %}
+            <li class="nav-item">
+              <a id="commandesNav" class="nav-link" href="{{ path('app_commandes') }}"><h4>Mes commandes</h4></a>
+            </li>
+          {% endif %}
+          <li class="nav-item dropdown">
+            <a id="categNav" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Catégories</a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              {% for categorie in categories %}
+                <li>
+                  <a id="catEstee" class="dropdown-item" href="{{ path('app_catalogue', { categorie: categorie.idCategorie }) }}">{{ categorie.categorie }}</a>
+                </li>
+              {% endfor %}
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item" href="{{ path('app_catalogue') }}">Toutes</a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a id="categNav" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administration</a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li>
+                <a id="catEstee" class="dropdown-item" href="{{ path('app_admin_categories') }}">Catégories</a>
+              </li>
+              <li>
+                <a id="catTooFaced" class="dropdown-item" href="{{ path('app_admin_nouveauProduit') }}">Nouveau Produit</a>
+              </li>
+              <li>
+                <a id="catClinique" class="dropdown-item" href="{{ path('app_admin_produits') }}">Produits</a>
+              </li>
+              <li>
+                <a id="catTomFord" class="dropdown-item" href="{{ path('app_admin_commandes') }}">Commandes</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

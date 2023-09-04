@@ -1,0 +1,20 @@
+.google-map iframe {
+    border: 10;
+    margin: 1vh;
+}
+
+.sources {
+    margin-top: 7rem;
+}
+
+.sources b {
+    color: white;
+}
+
+.sources li {
+    color: white;
+}
+
+.sources hr {
+    color: white;
+}

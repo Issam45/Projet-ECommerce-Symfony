@@ -1,0 +1,53 @@
+{% extends 'core/base.html.twig' %}
+
+{% block title %}
+  CosmeticsIA
+{% endblock %}
+
+{% block content %}
+  {# A faire: tableau contenant toutes les commandes #}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card bg-dark">
+          <h2 class="mt-3 ms-2 text-white">Produits</h2>
+          <hr class="mb-2 mx-4 text-white" />
+          <div class="card-body text-white">
+            <table class="table table-bordered table-hover table-dark text-center">
+              <thead>
+                <tr>
+                  <th># Produit</th>
+                  <th>Nom</th>
+                  <th>Catégorie</th>
+                  <th>Quantité en stock</th>
+                  <th>Détails</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for produit in produits %}
+                  <tr>
+                    <td>{{ produit.idProduit }}</td>
+                    <td>{{ produit.nom }}</td>
+                    {# Pour l'instant #}
+                    <td>{{ produit.produitCategorie.categorie }}</td>
+                    <td>{{ produit.quantiteEnStock }}</td>
+                    <td>
+                      <a href="{{ path('app_admin_modifierProduit', { idProduit: produit.idProduit }) }}"><i class="fas fa-eye"></i></a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                {% if (produits|length) == 0 %}
+                  <tr>
+                    <h2>Aucune commande n'est enregistré sur votre compte.</h2>
+                  </tr>
+                {% endif %}
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

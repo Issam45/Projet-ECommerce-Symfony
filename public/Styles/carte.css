@@ -1,0 +1,50 @@
+.produit {
+    width: 33.8vh;
+    margin-right: 2vh;
+    background-color: white;
+    border: 1px solid lightgray;
+    box-shadow: 2px 2px 5px lightgray;
+    display: flex;
+    flex-direction: column;
+    height: 51vh;
+    margin: 10px;
+    transition: transform .2s;
+    /* Animation */
+}
+
+.produit:hover {
+    transform: scale(1.05);
+    /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.produit img {
+    width: 30vh;
+    height: 26vh;
+    margin-bottom: 2rem;
+    cursor: zoom-in;
+}
+
+.produit a {
+    border: 2rem;
+    cursor: pointer;
+}
+
+.produit button {
+    width: fit-content;
+    margin-bottom: 0.5rem;
+}
+
+.btn-ajout:hover {
+    background-color: #FAAFBA;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tropLong {
+    white-space: nowrap;
+    overflow: hidden;
+}

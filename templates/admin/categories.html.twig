@@ -1,0 +1,41 @@
+{% extends 'core/base.html.twig' %}
+{% form_theme formCategories 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}
+  CosmeticsIA
+{% endblock %}
+
+{% block content %}
+  <card class="card bg-dark">
+    <h1 class="mt-2 ms-2 text-white">Catégories</h1>
+    {% for flash in app.flashes('categ') %}
+      <div class="text-center offset-3 w-50 alert {{ flash.couleur }}">{{ flash.contenu }}</div>
+    {% endfor %}
+
+    {{ form_start(formCategories, {'attr': {'class': 'needs-validation-register', 'novalidate':'novalidate' }}) }}
+    <div class="row">
+      <ul class="cat lstFormCat col-4 offset-4" data-index="{{ (formCategories.categories|length) > 0 ? formCategories.categories|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(formCategories.categories.vars.prototype)|e('html_attr') }}">
+        {% for key, categorie in formCategories.categories %}
+          <li>{{ form_row(categorie.categorie) }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="form-button col-4 offset-2">
+        <button type="button" class="add_categorie_link btn btn-info my-2" data-collection-holder-class="cat">Ajouter une catégorie</button>
+      </div>
+    </div>
+
+    <div class="row justify-content-center offset-1 mb-2">{{ form_row(formCategories.btnSave) }}</div>
+
+    {{ form_rest(formCategories) }}
+    {{ form_end(formCategories) }}
+  </card>
+{% endblock %}
+
+{% block javascripts %}
+  <script defer src="{{ asset('scripts/admin.categories.js') }}"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/jquery-mask-plugin@1.14.16/dist/jquery.mask.min.js"></script>
+	<script defer src="{{ asset('scripts/inscription.js')}}"></script>
+{% endblock %}
