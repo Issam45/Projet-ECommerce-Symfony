@@ -27,6 +27,7 @@ Ce projet a été développé en réponse à un défi académique visant à mett
 Veuillez me contacter pour toute question ou commentaire productif.
 
 **Capture d'écran**
+![Screenshot 2023-09-04 180528](https://github.com/Issam45/Projet-ECommerce-Symfony/assets/89462485/726ea407-41f1-4206-a2a1-ff3f4d980531)
 
 
 URL vers mon site:
