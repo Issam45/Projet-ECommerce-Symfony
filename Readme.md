@@ -1,6 +1,3 @@
-
-Projet E-Commerce en Symfony:
-
 **Nom du Projet**
 
 Projet eCommerce avec Symfony
